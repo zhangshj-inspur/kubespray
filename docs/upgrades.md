@@ -7,6 +7,7 @@ You can also individually control versions of components by explicitly defining 
 versions. Here are all version vars for each component:
 
 * docker_version
+* containerd_version
 * kube_version
 * etcd_version
 * calico_version
@@ -41,7 +42,7 @@ The var ```-e upgrade_cluster_setup=true``` is needed to be set in order to migr
 Kubespray also supports cordon, drain and uncordoning of nodes when performing
 a cluster upgrade. There is a separate playbook used for this purpose. It is
 important to note that upgrade-cluster.yml can only be used for upgrading an
-existing cluster. That means there must be at least 1 kube-master already
+existing cluster. That means there must be at least 1 kube_control_plane already
 deployed.
 
 ```ShellSession
@@ -283,6 +284,7 @@ installed in the Ansible playbook. The order of component installation is as
 follows:
 
 * Docker
+* Containerd
 * etcd
 * kubelet and kube-proxy
 * network_plugin (such as Calico or Weave)
@@ -309,12 +311,6 @@ Upgrade etcd:
 
 ```ShellSession
 ansible-playbook -b -i inventory/sample/hosts.ini cluster.yml --tags=etcd
-```
-
-Upgrade vault:
-
-```ShellSession
-ansible-playbook -b -i inventory/sample/hosts.ini cluster.yml --tags=vault
 ```
 
 Upgrade kubelet:
